@@ -1,0 +1,57 @@
+ create database Luffy ; 
+ use Luffy ; 
+ 
+ CREATE TABLE Paciente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    fecha_nacimiento varchar(34),
+    direccion VARCHAR(255),
+    telefono VARCHAR(15),
+    email VARCHAR(100),
+    numero_seguro_social VARCHAR(15) UNIQUE
+);
+INSERT INTO Paciente (nombre, fecha_nacimiento, direccion, telefono, email, numero_seguro_social)
+VALUES 
+('Juan Pérez', '1980-01-15', 'Calle Falsa 123', '555-1234', 'juan.perez@email.com', '123-45-6789'),
+('Ana Gómez', '1992-03-22', 'Avenida Real 456', '555-5678', 'ana.gomez@email.com', '987-65-4321');
+
+
+select * from Paciente; 
+
+CREATE TABLE Alergias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_paciente INT,
+    descripcion VARCHAR(255),
+    FOREIGN KEY (id_paciente) REFERENCES Paciente(id) ON DELETE CASCADE
+);
+INSERT INTO Alergias (id_paciente, descripcion)
+VALUES 
+(1, 'Polen'),
+(2, 'Amoxicilina');
+
+select * from Alergias; 
+
+CREATE TABLE Medicamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_paciente INT,
+    nombre_medicamento VARCHAR(100),
+    dosis VARCHAR(50),
+    fecha_prescripcion DATE,
+    FOREIGN KEY (id_paciente) REFERENCES Paciente(id) ON DELETE CASCADE
+);
+INSERT INTO Medicamentos (id_paciente, nombre_medicamento, dosis, fecha_prescripcion)
+VALUES 
+(1, 'Lisinopril', '10 mg', '2023-01-10'),
+(2, 'Paracetamol', '500 mg', '2023-02-15');
+
+select * from Medicamentos ; 
+
+CREATE TABLE HistorialMedico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_paciente INT,
+    fecha_consulta DATE NOT NULL,
+    diagnostico VARCHAR(255),
+    tratamiento VARCHAR(255),
+    FOREIGN KEY (id_paciente) REFERENCES Paciente(id) ON DELETE CASCADE
+);
+select * from HistorialMedico ;
